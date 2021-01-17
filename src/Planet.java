@@ -1,6 +1,8 @@
 public class Planet {
+    // 9 - Class Design (The "Big 3")
     private String name;
     private String type;
+    // 3 - primitive data types: double, int, boolean
     private double rotationCycle;
     private double mass;
 //    private double revolutionCycle;
@@ -27,49 +29,45 @@ public class Planet {
         this.canSupportLife = canSupportLife;
     }
 
+    // 9 - Class Design (The "Dynamic Duo")
+    // 10a - accessor method
     public String getName() {
         return name;
     }
 
+    // 10a - accessor method
     public String getType() {
         return type;
     }
 
-    public int getMoons() {
-        return moons;
-    }
-
+    // 10b - mutator method
     public void setMoons(int moons) {
         this.moons = moons;
     }
 
-
+    // 10a - accessor method
     public boolean getCanSupportLife() {
         return canSupportLife;
     }
 
-
+    // 10b - mutator method
     public void setCanSupportLife(boolean canSupportLife) {
         this.canSupportLife = canSupportLife;
     }
 
-    public void newMoonDiscovered() {
-        this.moons += 1;
-    }
-
+    // 10a - accessor method
     public double getMass() {
         return mass;
     }
 
-    public void setMass(double mass) {
-        this.mass = mass;
-    }
-
+    // 9 - Class Design (The "Big Brain")
     public double getMassInKG() {
+        // 6 - call to Math.pow()
         return this.mass * 5.972 * Math.pow(10, 24);
     }
 
     public double getSolarMass() {
+        // 6 - call to Math.pow()
         return getMassInKG() / (1.989 * Math.pow(10, 30));
     }
 

@@ -1,6 +1,7 @@
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
+// 11 - Class Composition - Driver
 public class OurPlanetsDriver {
     public static void main(String[] args) {
         // 17 - Scanner User Input
@@ -9,8 +10,14 @@ public class OurPlanetsDriver {
         // create object
         OurPlanets universe = new OurPlanets();
 
-        System.out.println("Welcome to Our Universe!");
+        System.out.println("Welcome to OurPlanets!");
         System.out.println("You will be given three explorations. In each exploration, you can try out different modes. To select a mode, type the integer before the mode and then hit [Enter].\n");
+        // Set Timeout - provide the user some time to look at my response
+        try {
+            TimeUnit.SECONDS.sleep(1);
+        } catch (InterruptedException e) {
+            System.out.println("Interrupted!");
+        }
 
         int count = 0;
         while (count < 3) {
@@ -25,7 +32,7 @@ public class OurPlanetsDriver {
             }
             else {
                 if (modeSelected == 7) {
-                    // 6 - Math.random call #2
+                    // 6 - call to Math.random(); 8 - use of casting
                     int randomMode = (int) (Math.random() * 6 + 1);
                     System.out.println("We helped you select mode " + randomMode + "\n");
                     modeSelected = randomMode;
@@ -36,7 +43,7 @@ public class OurPlanetsDriver {
                 if (modeSelected == 2) {
                     System.out.print("Type in the planet type that you would like to search for: ");
                     String typeInput = input.next(); // Not using nextLine because of the first-three-letter filter
-                    // 7 - String method, substring  (As you can see, I'm trying really hard to use a substring method :) )
+                    // 7 - String method (substring)  (As you can see, I'm trying really hard to use the substring method :) )
                     // Fix user's small typos by selected first three letters and use a switch to match corresponding type
                     String typeFirstThreeChars = typeInput.substring(0, 3);
 
@@ -87,6 +94,7 @@ public class OurPlanetsDriver {
                 }
                 if (modeSelected == 6) {
                     System.out.println("A SuperNova is coming!");
+                    // 6 - call to Math.random(); 8 - use of casting
                     int SuperNovaSolarMass = (int) (Math.random() * 60);
                     System.out.println("We detected that the mass of the SuperNova is approximately " + SuperNovaSolarMass + " Sun(s)");
                     System.out.println("Type 1 to stay on Earth, 2 to escape to an exoplanet(you can escape to a planet you created!), 3 to counter the SuperNova");
@@ -99,7 +107,7 @@ public class OurPlanetsDriver {
 
                 // Set Timeout - provide the user some time to look at my response
                 try {
-                    TimeUnit.SECONDS.sleep(3);
+                    TimeUnit.SECONDS.sleep(2);
                 } catch (InterruptedException e) {
                     System.out.println("Interrupted!");
                 }
@@ -114,7 +122,7 @@ public class OurPlanetsDriver {
         System.out.println("Enter 1 to view Developer's Profile; type any other number to quit.");
         String endProgramInput = input.next();
         if (endProgramInput.equals("1"))
-            System.out.println("\n\n\nDeveloper: @tonyliunyc\nProfile: Web Developer: Python, HTML, CSS, Javascript, D3JS, Flask, PostgreSQL; High school junior at Burlingame High School\nOur website: Global COVID-19 Vaccine Frontline: www.panelixir.com");
+            System.out.println("\n\n\nDeveloper: @tonyliunyc\nGitHub Repository for this project: https://github.com/tonyliunyc/OurPlanets\nProfile: Web Developer: Python, HTML, CSS, Javascript, D3JS, Flask, PostgreSQL; High school junior at Burlingame High School\nOur website: Global COVID-19 Vaccine Frontline: https://www.panelixir.com");
 
     }
 

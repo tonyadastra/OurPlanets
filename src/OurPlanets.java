@@ -19,26 +19,122 @@ public class OurPlanets {
 
     }
 
+    // 10d - 3 other methods #1
     public void addCustomPlanets(ArrayList<Planet> customPlanets){
         for (Planet customPlanet: customPlanets) {
             Exoplanets.add(customPlanet);
         }
     }
 
+    // 10c - A pair of overloaded methods: findPlanets(String type) and findPlanets(boolean canSupportLife)
+    public String findPlanets(String type) {
+        int i = 0;
+        String output = "";
+        String planetOutput = "";
+        // 4 - do-while loop
+        do {
+            if (SolarSystem[i].getType().equalsIgnoreCase(type)) {
+                planetOutput += SolarSystem[i] + "\n";
+            }
+            i++;
+        } while (i < SolarSystem.length);
 
+        // 4 - for loop
+        for (int j = 0; j < Exoplanets.size(); j++) {
+            if (Exoplanets.get(j).getType().equalsIgnoreCase(type)) {
+                planetOutput += Exoplanets.get(j) + "\n";
+            }
+        }
+
+        // 7 - String method (isEmpty)
+        if (planetOutput.isEmpty()) {
+            output = "Unfortunately, we did not find any planets of type '" + type + "'.";
+        }
+        else {
+            output = "Here are the planets we found! \n" + planetOutput;
+        }
+        return output;
+    }
+
+    // 10c - overloaded methods
+    public String findPlanets(boolean canSupportLife) {
+        int i = 0;
+        String output = "";
+        String planetOutput = "";
+        // 4 - while loop
+        while (i < SolarSystem.length) {
+            if (SolarSystem[i].getCanSupportLife() == canSupportLife) {
+                planetOutput += SolarSystem[i] + "\n\n";
+            }
+            i++;
+        }
+
+        // 4 - for loop
+        // 13 - traverse ArrayList of Exoplanets
+        for (int j = 0; j < Exoplanets.size(); j++) {
+            if (Exoplanets.get(j).getCanSupportLife() == canSupportLife) {
+                planetOutput += Exoplanets.get(j) + "\n\n";
+            }
+        }
+
+        if (planetOutput.isEmpty()) {
+            output = "Unfortunately, we did not find any planets of canSupportLife '" + canSupportLife + "'.";
+        }
+        else {
+            output = "Here are the planets we found! \n" + planetOutput;
+        }
+        return output;
+
+    }
+
+    // 10d - 3 other methods #2
+    public String findMinMaxMass() {
+        double minValue = SolarSystem[0].getMass(),  maxValue = SolarSystem[0].getMass();
+        Planet minPlanet = SolarSystem[0], maxPlanet = SolarSystem[0];
+
+        // Find values and corresponding Planet for Min/Max in SolarSystem + Exoplanets
+        // 14 - Access minimum and maximum values
+        // 18 - Nested for loop!
+        for (Planet planet : SolarSystem) {
+            for (Planet exoplanet : Exoplanets) {
+                if (minValue > planet.getMass() && planet.getMass() < exoplanet.getMass()) {
+                    minValue = planet.getMass();
+                    minPlanet = planet;
+                } else if (minValue > exoplanet.getMass() && planet.getMass() > exoplanet.getMass()) {
+                    minValue = exoplanet.getMass();
+                    minPlanet = exoplanet;
+                } else if (maxValue < planet.getMass() && planet.getMass() > exoplanet.getMass()) {
+                    maxValue = planet.getMass();
+                    maxPlanet = planet;
+                } else if (maxValue < exoplanet.getMass() && exoplanet.getMass() < planet.getMass()) {
+                    maxValue = exoplanet.getMass();
+                    maxPlanet = exoplanet;
+                }
+            }
+        }
+
+        String output = "Planet of the smallest mass in OurPlanets: " + minPlanet.getName() + ", mass: " + minValue + " Earth(s)\n";
+        output += "Planet of the largest mass in OurPlanets: " + maxPlanet.getName() + ", mass: " + maxValue + " Earth(s)";
+
+        return output;
+    }
+
+    // 10d - 3 other methods #3
     public String SuperNova(int SuperNovaSolarMass, int userOption) {
-//        int SuperNovaSolarMass = (int) (Math.random() * 60);
         int planetsDamaged = 0;
         boolean solarSystemDamaged = false;
         boolean exoplanetsDamaged = false;
 
         String output = "";
 
+        // 5 - switch statement
         switch (userOption) {
             case 3:
+                // 6 - call to Math.random(); 8 - use of casting
                 int counterPower = (int) ((Math.random() + 0.4) * SuperNovaSolarMass);
+                // 2 - if-then-else
                 if (counterPower >= SuperNovaSolarMass) {
-                    output += "Woo-hoo! Your counter power successfully defeated the SuperNova. ";
+                    output += "Woo-hoo! Your counter power successfully defeated the SuperNova!";
                     break;
                 }
                 else {
@@ -108,118 +204,25 @@ public class OurPlanets {
                     }
                 }
                 output += "\nThis SuperNova damaged a total of " + planetsDamaged + " planets. ";
-            }
+        }
 
 
         return output;
 
-    }
-
-//    public String AsteroidApproaching() {
-//        int asteroidMass =
-//    }
-
-    // 10c - A pair of overloaded methods: findPlanets(String type) and findPlanets(boolean canSupportLife)
-    public String findPlanets(String type) {
-        int i = 0;
-        String output = "";
-        String planetOutput = "";
-        do {
-            if (SolarSystem[i].getType().equalsIgnoreCase(type)) {
-                planetOutput += SolarSystem[i] + "\n";
-            }
-            i++;
-        } while (i < SolarSystem.length);
-
-        for (int j = 0; j < Exoplanets.size(); j++) {
-            if (Exoplanets.get(j).getType().equalsIgnoreCase(type)) {
-                planetOutput += Exoplanets.get(j) + "\n";
-            }
-        }
-
-        if (planetOutput.isEmpty()) {
-            output = "Unfortunately, we did not find any planets of type '" + type + "'.";
-        }
-        else {
-            output = "Here are the planets we found! \n" + planetOutput;
-        }
-        return output;
-    }
-
-
-    public String findPlanets(boolean canSupportLife) {
-        int i = 0;
-        String output = "";
-        String planetOutput = "";
-        while (i < SolarSystem.length) {
-            if (SolarSystem[i].getCanSupportLife() == canSupportLife) {
-                planetOutput += SolarSystem[i] + "\n\n";
-            }
-            i++;
-        }
-
-        for (int j = 0; j < Exoplanets.size(); j++) {
-            if (Exoplanets.get(j).getCanSupportLife() == canSupportLife) {
-                planetOutput += Exoplanets.get(j) + "\n\n";
-            }
-        }
-
-        if (planetOutput.isEmpty()) {
-            output = "Unfortunately, we did not find any planets of canSupportLife '" + canSupportLife + "'.";
-        }
-        else {
-            output = "Here are the planets we found! \n" + planetOutput;
-        }
-        return output;
-
-    }
-
-    public String findMinMaxMass() {
-//        int universePlanetCount = SolarSystem.length + Exoplanets.size();
-//        Planet[] sortedPlanets = new Planet[universePlanetCount];
-        double minValue = SolarSystem[0].getMass(),  maxValue = SolarSystem[0].getMass();
-        Planet minPlanet = SolarSystem[0], maxPlanet = SolarSystem[0];
-
-        // Find values and corresponding Planet for Min/Max
-        for (Planet planet : SolarSystem) {
-            for (Planet exoplanet : Exoplanets) {
-                if (minValue > planet.getMass() && planet.getMass() < exoplanet.getMass()) {
-                    minValue = planet.getMass();
-                    minPlanet = planet;
-                } else if (minValue > exoplanet.getMass() && planet.getMass() > exoplanet.getMass()) {
-                    minValue = exoplanet.getMass();
-                    minPlanet = exoplanet;
-                } else if (maxValue < planet.getMass() && planet.getMass() > exoplanet.getMass()) {
-                    maxValue = planet.getMass();
-                    maxPlanet = planet;
-                } else if (maxValue < exoplanet.getMass() && exoplanet.getMass() < planet.getMass()) {
-                    maxValue = exoplanet.getMass();
-                    maxPlanet = exoplanet;
-                }
-            }
-        }
-
-        String output = "Planet of the smallest mass in OurPlanets: " + minPlanet.getName() + ", mass: " + minValue + " Earth(s)\n";
-        output += "Planet of the largest mass in OurPlanets: " + maxPlanet.getName() + ", mass: " + maxValue + " Earth(s)";
-
-        return output;
     }
 
     public String toString() {
         String output = "This is our universe:\nThe Solar System:\n";
+        // 13 - traverse array of planets in SolarSystem
         for (Planet planet: SolarSystem)
             output += planet + "\n\n";
 
         output += "\nExoplanets:\n";
+        // 13 - traverse ArrayList of Exoplanets
         for (Planet planet: Exoplanets)
             output += planet + "\n\n";
 
         return output;
     }
-
-
-
-
-
 
 }

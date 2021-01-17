@@ -4,6 +4,8 @@
 
 
 ### Updates and Releases
++ v1.1 - Optimize Timeout, add useful comments, remove unnecessary methods
+  + Released: January 17, 2021
 + v1.0 - Initial Release
     + Released: January 17, 2021
 + v0.2 - Create OurPlanetsDriver, Test Different User Inputs
