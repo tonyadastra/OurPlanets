@@ -21,9 +21,7 @@ public class OurPlanets {
 
     // 10d - 3 other methods #1
     public void addCustomPlanets(ArrayList<Planet> customPlanets){
-        for (Planet customPlanet: customPlanets) {
-            Exoplanets.add(customPlanet);
-        }
+        Exoplanets.addAll(customPlanets);
     }
 
     // 10c - A pair of overloaded methods: findPlanets(String type) and findPlanets(boolean canSupportLife)

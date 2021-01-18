@@ -117,7 +117,7 @@ public class OurPlanetsDriver {
 
         }
 
-        System.out.println("Thank you for your interest in OurUniverse!");
+        System.out.println("Thank you for your interest in OurPlanets!");
 
         System.out.println("Enter 1 to view Developer's Profile; type any other number to quit.");
         String endProgramInput = input.next();
