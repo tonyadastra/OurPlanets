@@ -22,16 +22,16 @@ public class OurPlanetsDriver {
         int count = 0;
         while (count < 3) {
             System.out.println("Exploration #" + (count + 1));
-            System.out.println("1: Explore the universe\n2: Find Planets of a certain type\n3: Find planets that support life\n4: Create your own exoplanets\n5: Find the planets of the largest and smallest mass in OurUniverse\n6: Experience a Rare Space Event\n7: Why Pick one myself? You pick one for me!");
+            System.out.println("1: Explore the universe\n2: Find Planets of a certain type\n3: Find planets that support life\n4: Create your own exoplanets\n5: Find the planets of the largest and smallest mass in OurUniverse\n6: Experience a Rare Space Event\n7: Visit an Exoplanet\n8: Why Pick one myself? You pick one for me!");
             int modeSelected = input.nextInt();
             System.out.println("You selected option " + modeSelected + "\n");
             // 2 - "if-then-else" statement with "throw" error
-            if (modeSelected > 7 || modeSelected < 1){
+            if (modeSelected > 8 || modeSelected < 1){
                 // throw IllegalArgumentException
                 throw new IllegalArgumentException("Please enter a valid number.");
             }
             else {
-                if (modeSelected == 7) {
+                if (modeSelected == 8) {
                     // 6 - call to Math.random(); 8 - use of casting
                     int randomMode = (int) (Math.random() * 6 + 1);
                     System.out.println("We helped you select mode " + randomMode + "\n");
@@ -55,10 +55,11 @@ public class OurPlanetsDriver {
                         default -> typeInput;
                     };
 
+                    // 20 - interactions
                     System.out.println(universe.findPlanets(type));
-
                 }
                 if (modeSelected == 3) {
+                    // 20 - interactions
                     System.out.println(universe.findPlanets(true));
                 }
                 if (modeSelected == 4) {
@@ -72,6 +73,8 @@ public class OurPlanetsDriver {
                         String customPlanetName = input.nextLine();
                         System.out.println("What type is this planet? ");
                         String customPlanetType = input.nextLine();
+                        System.out.println("How many inhabitants are on this planet? ");
+                        int customPlanetInhabitants = input.nextInt();
                         System.out.println("How long is a day on your custom planet (in days)? ");
                         double customPlanetRotationCycle = input.nextDouble();
                         System.out.println("How many times is its mass compared to Earth? ");
@@ -81,15 +84,17 @@ public class OurPlanetsDriver {
                         System.out.println("Can this planet support life? (Enter true or false)");
                         boolean customPlanetCanSupportLife = input.nextBoolean();
 
-                        Planet newPlanet = new Planet(customPlanetName, customPlanetType, customPlanetRotationCycle, customPlanetMass, customPlanetMoons, customPlanetCanSupportLife);
+                        Planet newPlanet = new Planet(customPlanetName, customPlanetType, customPlanetInhabitants, customPlanetRotationCycle, customPlanetMass, customPlanetMoons, customPlanetCanSupportLife);
                         customPlanets.add(newPlanet);
                         System.out.println("New planet created successfully!");
                         System.out.println("This is your new planet: \n" + newPlanet + "\n");
                         addCount++;
                     }
+                    // 20 - interactions
                     universe.addCustomPlanets(customPlanets);
                 }
                 if (modeSelected == 5) {
+                    // 20 - interactions
                     System.out.println(universe.findMinMaxMass());
                 }
                 if (modeSelected == 6) {
@@ -100,8 +105,28 @@ public class OurPlanetsDriver {
                     System.out.println("Type 1 to stay on Earth, 2 to escape to an exoplanet(you can escape to a planet you created!), 3 to counter the SuperNova");
                     int userInput = input.nextInt();
 
+                    // 20 - interactions
                     String superNovaOutput = universe.SuperNova(SuperNovaSolarMass, userInput);
                     System.out.println(superNovaOutput);
+
+                }
+                if (modeSelected == 7) {
+                    System.out.println("Here are all the exoplanets, type in the number that you would like to visit");
+                    // 20 - interactions
+                    for (int i = 0; i < universe.getExoplanets().size(); i++) {
+                        System.out.println(i + ": " + universe.getExoplanets().get(i).getName());
+                    }
+                    Planet selectedPlanet = universe.getExoplanets().get(input.nextInt());
+                    if (selectedPlanet.getCanSupportLife()) {
+                        selectedPlanet.spaceshipLanding();
+                        System.out.println("Woo-hoo! You landed on this exoplanet. You are this planet's " + selectedPlanet.getInhabitants() + " resident.");
+                    }
+                    else {
+                        System.out.println("Since this planet cannot support life, you cannot safely land on this planet.");
+                        System.out.println("Here are the details about this planet: ");
+                        System.out.println(selectedPlanet);
+                    }
+                    System.out.println();
 
                 }
 

@@ -4,19 +4,18 @@ public class OurPlanets {
     private Planet[] SolarSystem = new Planet[8];
     private ArrayList<Planet> Exoplanets = new ArrayList<Planet>();
 
-    public OurPlanets(){
-        SolarSystem[0] = new Planet("Mercury", "Terrestrial", 59, 0.0553, 0, false);
-        SolarSystem[1] = new Planet("Venus", "Terrestrial", 243, 0.815, 0, false);
+    public OurPlanets() {
+        SolarSystem[0] = new Planet("Mercury", "Terrestrial", 0, 59, 0.0553, 0, false);
+        SolarSystem[1] = new Planet("Venus", "Terrestrial", 0, 243, 0.815, 0, false);
         SolarSystem[2] = new Planet();
-        SolarSystem[3] = new Planet("Mars", "Terrestrial", 1.025, 0.107, 2, true);
-        SolarSystem[4] = new Planet("Jupiter", "Gas Giant", 0.408, 317.8, 79, false);
-        SolarSystem[5] = new Planet("Saturn", "Gas Giant", 0.446, 95.2, 82, false);
-        SolarSystem[6] = new Planet("Uranus", "Ice Giant", 0.708, 14.5, 27, false);
-        SolarSystem[7] = new Planet("Neptune", "Ice Giant", 0.667, 17.1, 14, false);
+        SolarSystem[3] = new Planet("Mars", "Terrestrial", 0, 1.025, 0.107, 2, true);
+        SolarSystem[4] = new Planet("Jupiter", "Gas Giant", 0, 0.408, 317.8, 79, false);
+        SolarSystem[5] = new Planet("Saturn", "Gas Giant", 0, 0.446, 95.2, 82, false);
+        SolarSystem[6] = new Planet("Uranus", "Ice Giant", 0, 0.708, 14.5, 27, false);
+        SolarSystem[7] = new Planet("Neptune", "Ice Giant", 0, 0.667, 17.1, 14, false);
 
-        Exoplanets.add(new Planet("Proxima Centauri b", "Terrestrial", 1, 3.0, 0, false));
-        Exoplanets.add(new Planet("Proxima Centauri c", "Terrestrial", 1.2, 7, 0, false));
-
+        Exoplanets.add(new Planet("Proxima Centauri b", "Terrestrial", 0, 1, 3.0, 0, false));
+        Exoplanets.add(new Planet("Proxima Centauri c", "Terrestrial", 0, 1.2, 7, 0, false));
     }
 
     // 10d - 3 other methods #1
@@ -54,7 +53,7 @@ public class OurPlanets {
         return output;
     }
 
-    // 10c - overloaded methods
+    // 23 - Polymorphism
     public String findPlanets(boolean canSupportLife) {
         int i = 0;
         String output = "";
@@ -82,37 +81,71 @@ public class OurPlanets {
             output = "Here are the planets we found! \n" + planetOutput;
         }
         return output;
-
     }
 
     // 10d - 3 other methods #2
     public String findMinMaxMass() {
         double minValue = SolarSystem[0].getMass(),  maxValue = SolarSystem[0].getMass();
-        Planet minPlanet = SolarSystem[0], maxPlanet = SolarSystem[0];
+        Planet minPlanet, maxPlanet;
 
         // Find values and corresponding Planet for Min/Max in SolarSystem + Exoplanets
-        // 14 - Access minimum and maximum values
-        // 18 - Nested for loop!
-        for (Planet planet : SolarSystem) {
-            for (Planet exoplanet : Exoplanets) {
-                if (minValue > planet.getMass() && planet.getMass() < exoplanet.getMass()) {
-                    minValue = planet.getMass();
-                    minPlanet = planet;
-                } else if (minValue > exoplanet.getMass() && planet.getMass() > exoplanet.getMass()) {
-                    minValue = exoplanet.getMass();
-                    minPlanet = exoplanet;
-                } else if (maxValue < planet.getMass() && planet.getMass() > exoplanet.getMass()) {
-                    maxValue = planet.getMass();
-                    maxPlanet = planet;
-                } else if (maxValue < exoplanet.getMass() && exoplanet.getMass() < planet.getMass()) {
-                    maxValue = exoplanet.getMass();
-                    maxPlanet = exoplanet;
-                }
+        // 24 - Insertion Sort
+        for (int i = 1; i < SolarSystem.length; i++) {
+            Planet keyPlanet = SolarSystem[i];
+            int j = i - 1;
+
+            while (j >= 0 && SolarSystem[j].getMass() > keyPlanet.getMass()) {
+                SolarSystem[j + 1]= SolarSystem[j];
+                j--;
             }
+            SolarSystem[j + 1] = keyPlanet;
         }
 
-        String output = "Planet of the smallest mass in OurPlanets: " + minPlanet.getName() + ", mass: " + minValue + " Earth(s)\n";
-        output += "Planet of the largest mass in OurPlanets: " + maxPlanet.getName() + ", mass: " + maxValue + " Earth(s)";
+        for (int i = 1; i < Exoplanets.size(); i++) {
+            Planet keyPlanet = Exoplanets.get(i);
+            int j = i - 1;
+
+            while (j >= 0 && Exoplanets.get(j).getMass() > keyPlanet.getMass()) {
+                Exoplanets.set(j + 1, Exoplanets.get(j));
+                j--;
+            }
+            Exoplanets.set(j + 1, keyPlanet);
+        }
+
+        if (Exoplanets.get(0).getMass() < SolarSystem[0].getMass()) {
+            minPlanet = Exoplanets.get(0);
+        }
+        else {
+            minPlanet = SolarSystem[0];
+        }
+
+        if (Exoplanets.get(Exoplanets.size() - 1).getMass() > SolarSystem[SolarSystem.length - 1].getMass()) {
+            maxPlanet = Exoplanets.get(Exoplanets.size() - 1);
+        }
+        else {
+            maxPlanet = SolarSystem[SolarSystem.length - 1];
+        }
+
+//        for (Planet planet : SolarSystem) {
+//            for (Planet exoplanet : Exoplanets) {
+//                if (minValue > planet.getMass() && planet.getMass() < exoplanet.getMass()) {
+//                    minValue = planet.getMass();
+//                    minPlanet = planet;
+//                } else if (minValue > exoplanet.getMass() && planet.getMass() > exoplanet.getMass()) {
+//                    minValue = exoplanet.getMass();
+//                    minPlanet = exoplanet;
+//                } else if (maxValue < planet.getMass() && planet.getMass() > exoplanet.getMass()) {
+//                    maxValue = planet.getMass();
+//                    maxPlanet = planet;
+//                } else if (maxValue < exoplanet.getMass() && exoplanet.getMass() < planet.getMass()) {
+//                    maxValue = exoplanet.getMass();
+//                    maxPlanet = exoplanet;
+//                }
+//            }
+//        }
+
+        String output = "Planet of the smallest mass in OurPlanets: " + minPlanet.getName() + ", mass: " + minPlanet.getMass() + " Earth(s)\n";
+        output += "Planet of the largest mass in OurPlanets: " + maxPlanet.getName() + ", mass: " + maxPlanet.getMass() + " Earth(s)";
 
         return output;
     }
@@ -192,7 +225,7 @@ public class OurPlanets {
                     if (userOption == 1)
                         output += "Oh no! The Solar System is damaged! You did not survive the SuperNova.";
                     else
-                        output += "Nice! The SuperNova damaged the Solar System, and you survived. Now, you need to build a new planet...";
+                        output += "Nice! The SuperNova damaged the Solar System, and you survived. Now, you need to build a new life on a new planet...";
                 } else {
                     if (userOption == 1)
                         output += "Great decision! The SuperNova did not hit the Solar System. You survived the SuperNova.";
@@ -203,10 +236,12 @@ public class OurPlanets {
                 }
                 output += "\nThis SuperNova damaged a total of " + planetsDamaged + " planets. ";
         }
-
-
         return output;
 
+    }
+
+    public ArrayList<Planet> getExoplanets() {
+        return Exoplanets;
     }
 
     public String toString() {
